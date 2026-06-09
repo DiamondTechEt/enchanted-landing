@@ -77,14 +77,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "ROB FILM Production - Turning Vision Into Motion" },
+      {
+        name: "description",
+        content:
+          "Professional film production company creating powerful visual narratives and cinematic experiences. From concept to final cut - ROB FILM Production.",
+      },
+      { name: "author", content: "ROB FILM Production" },
+      { property: "og:url", content: "https://rob-production-leul.vercel.app" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "ROB FILM Production - Turning Vision Into Motion" },
+      {
+        property: "og:description",
+        content:
+          "Professional film production company creating powerful visual narratives and cinematic experiences. From concept to final cut - ROB FILM Production.",
+      },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { property: "og:image", content: "/src/assets/wolf-logo.png" },
     ],
     links: [
       {
@@ -104,6 +113,42 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
+      {
+        rel: "icon",
+        type: "image/svg+xml",
+        href: "./wolf.svg",
+      },
+      {
+        rel: "icon",
+        href: "/wolf.png",
+        type: "image/x-icon",
+      },
+      {
+        rel: "apple-touch-icon",
+        sizes: "180x180",
+        href: "/wolf.png",
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "32x32",
+        href: "/wolf.png",
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "16x16",
+        href: "/wolf.png",
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        href: "/assets/wolf-CkpQj1_n.png",
+      },
+      {
+        rel: "stylesheet",
+        href: "https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -117,6 +162,23 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "ROB FILM Production",
+              "url": "https://robproduction.tv",
+              "logo": "https://robproduction.tv/wolf.png",
+              "sameAs": [
+                "https://www.facebook.com/robproduction",
+                "https://www.instagram.com/rob_film",
+                "https://www.youtube.com/robproduction"
+              ]
+            })
+          }}
+        />
       </head>
       <body>
         {children}
