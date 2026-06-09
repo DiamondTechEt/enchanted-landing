@@ -153,11 +153,9 @@ function Workflows() {
             whileInView={{ opacity: 1, rotate: 10, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.15 }}
-            style={{ x: xB }}
+            style={{ x: xB, background: "linear-gradient(180deg, var(--color-red-poster) 0%, var(--color-red-poster) 50%, var(--color-yellow-poster) 50%, var(--color-yellow-poster) 100%)" }}
             whileHover={{ rotate: 16, scale: 1.06, x: 80, zIndex: 30 }}
             className="absolute top-20 left-48 w-56 h-72 rounded-3xl shadow-2xl cursor-pointer"
-            // eslint-disable-next-line react/jsx-no-duplicate-props
-            {...{ style: { background: "linear-gradient(180deg, var(--color-red-poster) 0%, var(--color-red-poster) 50%, var(--color-yellow-poster) 50%, var(--color-yellow-poster) 100%)" } }}
           />
           <motion.img
             src={cardBw} alt=""
