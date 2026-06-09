@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Star } from "lucide-react";
 import { Logo, MenuButton, SideNav, ContactSticker } from "@/components/Chrome";
 
 import cardMan from "@/assets/card-man.jpg";
@@ -93,46 +93,71 @@ function Hero() {
   );
 }
 
-/* ---------------- Bottleneck headline ---------------- */
+/* ---------------- Bottleneck — word-by-word scroll reveal ---------------- */
 function Bottleneck() {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const opacity = useTransform(scrollYProgress, [0.1, 0.4, 0.7], [0.2, 1, 0.3]);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.9", "end 0.4"] });
+
+  const text = "Great Releases Lose Momentum When Creative Becomes the Bottleneck.";
+  const words = text.split(" ");
 
   return (
     <section ref={ref} className="py-40 px-6">
-      <motion.h2 style={{ opacity }} className="max-w-6xl mx-auto text-center text-[clamp(2.5rem,7vw,6rem)] font-black leading-[1.02] tracking-[-0.03em]">
-        Great Releases Lose Momentum When{" "}
-        <span className="text-foreground/25">Creative Becomes the </span>
-        <span className="font-serif italic text-foreground/20">Bottleneck.</span>
-      </motion.h2>
+      <h2 className="max-w-6xl mx-auto text-center text-[clamp(2.5rem,7vw,6rem)] font-black leading-[1.05] tracking-[-0.03em] flex flex-wrap justify-center gap-x-[0.25em] gap-y-2">
+        {words.map((w, i) => {
+          const start = i / words.length;
+          const end = start + 1 / words.length;
+          const opacity = useTransform(scrollYProgress, [start, end], [0.15, 1]);
+          const isLast = i === words.length - 1;
+          return (
+            <motion.span
+              key={i}
+              style={{ opacity }}
+              className={isLast ? "font-serif italic text-muted-sage" : ""}
+            >
+              {w}
+            </motion.span>
+          );
+        })}
+      </h2>
     </section>
   );
 }
 
-/* ---------------- Workflows ---------------- */
+/* ---------------- Workflows — images push apart on hover / scroll ---------------- */
 function Workflows() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const spread = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 1]);
+  const xA = useTransform(spread, [0, 1], [0, -60]);
+  const xB = useTransform(spread, [0, 1], [0, 40]);
+  const xC = useTransform(spread, [0, 1], [0, -30]);
+  const yC = useTransform(spread, [0, 1], [0, 40]);
+
   return (
     <section className="py-32 px-6">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-        <div className="relative h-[500px]">
+      <div ref={ref} className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        <div className="relative h-[520px] group">
           <motion.img
             src={cardDesert} alt=""
             initial={{ opacity: 0, rotate: -20, y: 40 }}
             whileInView={{ opacity: 1, rotate: -8, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            whileHover={{ rotate: -2, scale: 1.05 }}
-            className="absolute top-0 left-4 w-64 h-80 object-cover rounded-3xl shadow-2xl"
+            style={{ x: xA }}
+            whileHover={{ rotate: -14, scale: 1.06, x: -90, zIndex: 30 }}
+            className="absolute top-0 left-4 w-64 h-80 object-cover rounded-3xl shadow-2xl cursor-pointer"
           />
           <motion.div
             initial={{ opacity: 0, rotate: 20, y: 40 }}
             whileInView={{ opacity: 1, rotate: 10, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.15 }}
-            whileHover={{ rotate: 4, scale: 1.05 }}
-            className="absolute top-20 left-48 w-56 h-72 rounded-3xl shadow-2xl flex items-center justify-center"
-            style={{ background: "linear-gradient(180deg, var(--color-red-poster) 0%, var(--color-red-poster) 50%, var(--color-yellow-poster) 50%, var(--color-yellow-poster) 100%)" }}
+            style={{ x: xB }}
+            whileHover={{ rotate: 16, scale: 1.06, x: 80, zIndex: 30 }}
+            className="absolute top-20 left-48 w-56 h-72 rounded-3xl shadow-2xl cursor-pointer"
+            // eslint-disable-next-line react/jsx-no-duplicate-props
+            {...{ style: { background: "linear-gradient(180deg, var(--color-red-poster) 0%, var(--color-red-poster) 50%, var(--color-yellow-poster) 50%, var(--color-yellow-poster) 100%)" } }}
           />
           <motion.img
             src={cardBw} alt=""
@@ -140,8 +165,9 @@ function Workflows() {
             whileInView={{ opacity: 1, rotate: -5, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            whileHover={{ rotate: 0, scale: 1.05 }}
-            className="absolute top-56 left-20 w-60 h-72 object-cover rounded-3xl shadow-2xl"
+            style={{ x: xC, y: yC }}
+            whileHover={{ rotate: -12, scale: 1.06, x: -60, y: 70, zIndex: 30 }}
+            className="absolute top-56 left-20 w-60 h-72 object-cover rounded-3xl shadow-2xl cursor-pointer"
           />
         </div>
 
@@ -166,37 +192,30 @@ function Workflows() {
   );
 }
 
-/* ---------------- Selected Work ---------------- */
+/* ---------------- Selected Work — hover overlay text ---------------- */
 function SelectedWork() {
   const works = [
-    { title: "Yourgi", img: cardHands },
-    { title: "Mereba", img: cardStones },
+    { title: "Yourgi", overlay: "Selected\nwork.", img: cardHands },
+    { title: "Mereba", overlay: "Worlds built\naround the release.", img: cardStones },
   ];
 
   return (
     <section className="py-32 px-6">
-      <motion.h2
-        initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp}
-        className="text-center text-[clamp(3rem,8vw,7rem)] font-black leading-[0.95] tracking-tight"
-      >
-        Selected<br /><Italic>work.</Italic>
-      </motion.h2>
-      <motion.p
-        initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp}
-        className="text-center text-xl mt-6"
-      >
-        Worlds built around the release.
-      </motion.p>
-
       <motion.div
         initial={{ opacity: 0, y: 60 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 1 }}
         whileHover={{ scale: 1.01 }}
-        className="max-w-6xl mx-auto mt-16 rounded-3xl overflow-hidden aspect-[16/8]"
+        className="group max-w-6xl mx-auto rounded-3xl overflow-hidden aspect-[16/8] relative cursor-pointer"
       >
-        <img src={cardChecker} alt="" className="w-full h-full object-cover" />
+        <img src={cardChecker} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-foreground/40">
+          <h2 className="text-[clamp(3rem,8vw,6rem)] font-black text-background leading-[0.95] tracking-tight">
+            Selected<br /><span className="font-serif italic font-normal">work.</span>
+          </h2>
+          <p className="mt-4 text-xl text-background">Worlds built around the release.</p>
+        </div>
       </motion.div>
 
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-6 mt-6">
@@ -211,8 +230,11 @@ function SelectedWork() {
             whileHover={{ y: -8 }}
             className="group block rounded-3xl overflow-hidden bg-mustard relative"
           >
-            <div className="aspect-square overflow-hidden">
+            <div className="aspect-square overflow-hidden relative">
               <img src={w.img} alt={w.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 flex items-center justify-center text-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-foreground/50 p-6">
+                <h3 className="text-4xl md:text-5xl font-black text-background whitespace-pre-line leading-tight">{w.overlay}</h3>
+              </div>
             </div>
             <div className="px-6 py-5 bg-background border-t border-border">
               <h3 className="text-2xl font-bold">{w.title}</h3>
@@ -224,34 +246,38 @@ function SelectedWork() {
   );
 }
 
-/* ---------------- Enter the World ---------------- */
+/* ---------------- Enter the World — full circle, 360° rotation ---------------- */
 function EnterWorld() {
-  const orbit = [cardMan, cardWoman, cardOrange, cardDesert, cardStones, cardHands, cardChecker, cardPalm, cardColumns, cardBw];
-  const radius = 320;
+  const orbit = [cardMan, cardDesert, cardWoman, cardHands, cardOrange, cardBw, cardColumns, cardStones, cardPalm, cardChecker];
+  const radius = 360;
 
   return (
     <section className="py-40 px-6 overflow-hidden">
-      <div className="relative max-w-5xl mx-auto h-[720px] flex items-center justify-center">
+      <div className="relative max-w-6xl mx-auto h-[820px] flex items-center justify-center">
         <motion.div
           animate={{ rotate: 360 }}
-          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
           className="absolute inset-0"
         >
           {orbit.map((img, i) => {
-            const angle = (i / orbit.length) * Math.PI * 2;
+            const angle = (i / orbit.length) * Math.PI * 2 - Math.PI / 2;
             const x = Math.cos(angle) * radius;
             const y = Math.sin(angle) * radius;
-            const rot = (i * 37) % 40 - 20;
+            const rot = ((i * 47) % 30) - 15;
             return (
-              <motion.div
+              <div
                 key={i}
-                animate={{ rotate: -360 }}
-                transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-                className="absolute left-1/2 top-1/2 w-32 h-32 -ml-16 -mt-16 rounded-2xl overflow-hidden shadow-xl"
+                className="absolute left-1/2 top-1/2 w-36 h-36 md:w-40 md:h-40 -ml-20 -mt-20 rounded-2xl overflow-hidden shadow-xl"
                 style={{ transform: `translate(${x}px, ${y}px) rotate(${rot}deg)` }}
               >
-                <img src={img} alt="" className="w-full h-full object-cover" />
-              </motion.div>
+                <motion.img
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+                  src={img}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
+              </div>
             );
           })}
         </motion.div>
@@ -267,7 +293,7 @@ function EnterWorld() {
   );
 }
 
-/* ---------------- How We Help ---------------- */
+/* ---------------- How We Help — sticky title, cards scroll past ---------------- */
 function HowWeHelp() {
   const services = [
     {
@@ -291,32 +317,42 @@ function HowWeHelp() {
   ];
 
   return (
-    <section className="py-32 px-6">
-      <motion.h2
-        initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp}
-        className="text-center text-[clamp(3rem,8vw,7rem)] font-black leading-[0.95] tracking-tight mb-20"
-      >
-        How We <Italic>Help.</Italic>
-      </motion.h2>
+    <section className="relative px-6">
+      <div className="max-w-6xl mx-auto grid md:grid-cols-[1fr_1.3fr] gap-10 items-start">
+        {/* Sticky title column */}
+        <div className="md:sticky md:top-24 self-start py-20">
+          <h2 className="text-[clamp(3rem,7vw,6rem)] font-black leading-[0.9] tracking-tight">
+            How We <Italic>Help.</Italic>
+          </h2>
+          <p className="mt-6 text-lg max-w-sm text-foreground/70">
+            Three connected services. One creative system that keeps every release moving.
+          </p>
+        </div>
 
-      <div className="max-w-6xl mx-auto space-y-[-60px]">
-        {services.map((s, i) => (
-          <motion.div
-            key={s.n}
-            initial={{ opacity: 0, y: 120 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            whileHover={{ y: -10, scale: 1.01 }}
-            className="relative rounded-3xl p-10 md:p-14 grid md:grid-cols-2 gap-8 items-end shadow-2xl"
-            style={{ backgroundColor: s.bg, marginTop: i === 0 ? 0 : "-60px" }}
-          >
-            <div>
-              <div className="flex items-start justify-between mb-16">
-                <h3 className="text-4xl md:text-6xl font-black">{s.title}</h3>
-                <span className="text-4xl md:text-6xl font-black">{s.n}</span>
+        {/* Scrolling cards column */}
+        <div className="py-20 space-y-6">
+          {services.map((s, i) => (
+            <motion.div
+              key={s.n}
+              initial={{ opacity: 0, y: 80 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: i * 0.05 }}
+              whileHover={{ y: -8, scale: 1.01 }}
+              className="rounded-3xl p-8 md:p-10 shadow-2xl"
+              style={{ backgroundColor: s.bg }}
+            >
+              <div className="flex items-start justify-between mb-10">
+                <h3 className="text-3xl md:text-5xl font-black">{s.title}</h3>
+                <span className="text-3xl md:text-5xl font-black">{s.n}</span>
               </div>
-              <h4 className="text-2xl md:text-3xl font-bold leading-tight">{s.heading}</h4>
+              <motion.img
+                src={s.img} alt=""
+                whileHover={{ rotate: 0, scale: 1.04 }}
+                className="w-full aspect-[16/9] object-cover rounded-2xl shadow-xl"
+                style={{ rotate: i % 2 === 0 ? "2deg" : "-2deg" }}
+              />
+              <h4 className="mt-8 text-2xl md:text-3xl font-bold leading-tight">{s.heading}</h4>
               <p className="mt-4 text-lg max-w-md">{s.body}</p>
               <button className="mt-8 inline-flex items-center gap-3 group">
                 <span className="w-11 h-11 rounded-full bg-foreground text-background flex items-center justify-center group-hover:rotate-45 transition-transform">
@@ -324,15 +360,114 @@ function HowWeHelp() {
                 </span>
                 <span className="px-6 py-2.5 rounded-full bg-foreground text-background font-medium">View Details</span>
               </button>
-            </div>
-            <motion.img
-              src={s.img} alt=""
-              whileHover={{ rotate: 0, scale: 1.05 }}
-              className="w-full max-w-sm justify-self-end aspect-[4/5] object-cover rounded-2xl shadow-xl"
-              style={{ rotate: i % 2 === 0 ? "4deg" : "-4deg" }}
-            />
-          </motion.div>
-        ))}
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Testimonials ---------------- */
+function Testimonials() {
+  const cards = [
+    { dark: false, stars: 5, body: "I truly appreciate the work they've helped our family studio with — such a careful and authentic attention to storytelling. Their passion has made an impact on our brand.", name: "Sarah Lee", role: "Creative Director" },
+    { dark: true,  stars: 3, body: "We loved the energy and the way they captured the tension and rhythm of our latest record from the very first session.", name: "Marcus Bell", role: "Producer" },
+    { dark: false, stars: 5, body: "From the start, the Ababa team was thoroughly engaged and thoughtful in their execution, offering solutions and suggestions on how to get our project over the line. I would partner with them again, and would refer them without question.", name: "Tom Coppola", role: "Label Founder" },
+    { dark: true,  stars: 5, body: "From the very first conversation, Conusely felt more like a partner than an agency. They took the time to understand our challenges and translated complex ideas into a clean, intuitive digital experience.", name: "Jane Park", role: "Head of Marketing" },
+    { dark: false, stars: 5, body: "Working with them was easy as A-B-A-B-A!", name: "Tom Greenwald", role: "Manager" },
+  ];
+
+  return (
+    <section className="py-32 px-6 overflow-hidden">
+      <motion.h2
+        initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp}
+        className="max-w-5xl mx-auto text-center text-[clamp(2.5rem,7vw,6rem)] font-black leading-[1] tracking-tight"
+      >
+        Trusted by teams who move <Italic>fast.</Italic>
+      </motion.h2>
+
+      <div className="mt-20 flex justify-center items-end gap-[-30px] flex-wrap px-4">
+        {cards.map((c, i) => {
+          const rot = (i - 2) * 4;
+          const y = Math.abs(i - 2) * 14;
+          return (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 80, rotate: 0 }}
+              whileInView={{ opacity: 1, y, rotate: rot }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: y - 30, rotate: rot * 0.3, scale: 1.04, zIndex: 30 }}
+              className="relative w-[260px] min-h-[440px] rounded-3xl p-6 shadow-2xl flex flex-col -mx-3"
+              style={{
+                backgroundColor: c.dark ? "var(--color-foreground)" : "var(--color-background)",
+                color: c.dark ? "var(--color-background)" : "var(--color-foreground)",
+                border: c.dark ? "none" : "1px solid var(--color-border)",
+                zIndex: 10 + (5 - Math.abs(i - 2)),
+              }}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex gap-0.5">
+                  {Array.from({ length: c.stars }).map((_, s) => (
+                    <Star key={s} className="w-4 h-4 fill-lime stroke-lime" />
+                  ))}
+                </div>
+                <span className="text-[10px] font-bold tracking-wider opacity-70">CONTACT SALES</span>
+              </div>
+              <p className="mt-8 text-base leading-snug flex-1">{c.body}</p>
+              <div className="mt-6 pt-4 border-t border-current/10">
+                <div className="font-bold">{c.name}</div>
+                <div className="text-xs opacity-70">{c.role}</div>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- CTA ---------------- */
+function CTA() {
+  return (
+    <section className="relative bg-foreground text-background py-32 px-6 overflow-hidden">
+      <div className="max-w-6xl mx-auto text-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-background/10 text-background text-sm font-bold"
+        >
+          IG
+        </motion.div>
+
+        <motion.h2
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-16 text-[clamp(3rem,11vw,10rem)] font-black leading-[0.9] tracking-[-0.04em]"
+        >
+          Ready To Build<br />Your Next<br />Release?
+        </motion.h2>
+
+        <motion.button
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          whileHover={{ scale: 1.05 }}
+          className="mt-16 inline-flex items-center gap-2 group"
+        >
+          <span className="w-12 h-12 rounded-full bg-lime text-foreground flex items-center justify-center group-hover:rotate-45 transition-transform">
+            <ArrowUpRight className="w-5 h-5" />
+          </span>
+          <span className="px-7 py-3 rounded-full bg-lime text-foreground font-medium text-lg">
+            Book a demo
+          </span>
+        </motion.button>
       </div>
     </section>
   );
@@ -352,6 +487,8 @@ function Index() {
       <SelectedWork />
       <EnterWorld />
       <HowWeHelp />
+      <Testimonials />
+      <CTA />
 
       <footer className="py-16 text-center text-sm text-foreground/50">
         © ABABA — Every artist needs a team.
