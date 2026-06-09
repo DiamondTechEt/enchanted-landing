@@ -52,12 +52,12 @@ export function Workflows() {
       <section className="py-16 px-6 overflow-hidden">
         <div className="max-w-6xl mx-auto flex flex-col gap-12 items-center">
           {/* Card stack (mobile) - separated left/right, fixed position, no hover */}
-          <div className="relative w-full h-[315px] select-none mb-16">
+          <div className="relative w-full h-[350px] select-none mb-16">
             {/* Left Card: Desert */}
             <img
               src={cardDesert}
               alt=""
-              className="absolute left-[-35px] top-2 w-[235px] h-[290px] object-cover rounded-3xl shadow-2xl rotate-[-6deg] z-20"
+              className="absolute left-[-35px] top-2 w-[265px] h-[330px] object-cover rounded-3xl shadow-2xl rotate-[-6deg] z-20"
             />
 
             {/* Right Card: Red/Yellow Poster */}
@@ -66,7 +66,7 @@ export function Workflows() {
                 background:
                   "linear-gradient(180deg, var(--color-red-poster) 0%, var(--color-red-poster) 50%, var(--color-yellow-poster) 50%, var(--color-yellow-poster) 100%)",
               }}
-              className="absolute right-[-35px] top-8 w-[225px] h-[275px] rounded-3xl shadow-xl flex flex-col justify-end overflow-hidden rotate-[8deg] z-10"
+              className="absolute right-[-35px] top-8 w-[255px] h-[310px] rounded-3xl shadow-xl flex flex-col justify-end overflow-hidden rotate-[8deg] z-10"
             >
               <div className="h-1/2 w-full flex items-center justify-center relative">
                 <div className="w-10 h-10 rounded-full border border-black/10 bg-white/20 flex items-center justify-center">
