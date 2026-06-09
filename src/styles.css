@@ -73,3 +73,12 @@
   to { transform: rotate(360deg); }
 }
 .animate-spin-slow { animation: spin-slow 12s linear infinite; }
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+

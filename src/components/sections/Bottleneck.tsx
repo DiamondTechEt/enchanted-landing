@@ -53,9 +53,8 @@ export function Bottleneck() {
 
   return (
     <section ref={ref} className="relative h-[180vh] w-full bg-background">
-      {/* Sticky container that locks the content to the viewport */}
-      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-6">
-        <h2 className="max-w-6xl mx-auto text-center text-[clamp(2.5rem,7vw,6rem)] font-black leading-[1.05] tracking-[-0.03em] flex flex-wrap justify-center gap-x-[0.25em] gap-y-2 select-none">
+      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-6 md:px-20">
+        <h2 className="max-w-6xl w-full text-left text-[clamp(2.5rem,7vw,6rem)] font-black leading-[1.05] tracking-[-0.03em] flex flex-wrap justify-start gap-x-[0.25em] gap-y-2 select-none">
           {wordsWithCharIndices.map((wordObj, wIdx) => {
             const isLastWord = wIdx === words.length - 1;
             return (

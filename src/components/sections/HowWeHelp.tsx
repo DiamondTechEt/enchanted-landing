@@ -19,7 +19,7 @@ export function HowWeHelp() {
 
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 40,
-    damping: 28,
+    damping: 20,
     mass: 0.6,
     restDelta: 0.0001
   });
@@ -141,7 +141,7 @@ export function HowWeHelp() {
         </div>
 
         {/* Stacking Cards Container */}
-        <div className="relative w-full max-w-5xl h-[460px] md:h-[500px] flex items-center justify-center z-10">
+        <div className="relative w-full max-w-5xl h-[70vh] md:h-[500px] flex items-center justify-center z-10">
           {services.map((s, i) => {
             const transform = cardTransforms[i];
 
@@ -169,10 +169,10 @@ export function HowWeHelp() {
                 </div>
 
                 {/* Card Content Grid */}
-                <div className="flex-1 grid md:grid-cols-2 gap-8 md:gap-12 mt-4 md:mt-6 overflow-hidden">
+                <div className="flex-1 flex flex-col md:grid md:grid-cols-2 gap-4 md:gap-12 mt-4 md:mt-6 overflow-hidden">
 
                   {/* Left Column (Copy & Button) */}
-                  <div className="flex flex-col justify-end pb-1 md:pb-4">
+                  <div className="flex flex-col justify-end pb-1 md:pb-4 order-2 md:order-1">
                     <div>
                       <h4 className="text-xl md:text-2xl font-bold leading-tight tracking-tight text-[#1a1c18] mb-2 md:mb-4 max-w-sm">
                         {s.heading}
@@ -191,9 +191,8 @@ export function HowWeHelp() {
                       <motion.div
                         layout
                         transition={{ type: "spring", stiffness: 220, damping: 20 }}
-                        className={`flex items-center gap-0 ${
-                          hoveredButton === i ? "flex-row-reverse" : "flex-row"
-                        }`}
+                        className={`flex items-center gap-0 ${hoveredButton === i ? "flex-row-reverse" : "flex-row"
+                          }`}
                       >
                         <motion.span
                           layout
@@ -223,9 +222,9 @@ export function HowWeHelp() {
                   </div>
 
                   {/* Right Column (Tilted Image Showcase) */}
-                  <div className="flex justify-end items-center h-full pb-1 md:pb-4">
+                  <div className="flex justify-center md:justify-end items-center h-full pb-1 md:pb-4 order-1 md:order-2">
                     <div
-                      className="h-full max-h-[260px] md:max-h-[300px] aspect-[4/5] rounded-[16px] md:rounded-[20px] overflow-hidden shadow-[0_8px_24px_rgba(0,0,0,0.12)] border border-black/5 bg-[#F4F2EB]"
+                      className="h-[180px] md:h-full max-h-[260px] md:max-h-[300px] aspect-[4/5] rounded-[16px] md:rounded-[20px] overflow-hidden shadow-[0_8px_24px_rgba(0,0,0,0.12)] border border-black/5 bg-[#F4F2EB]"
                       style={{
                         transform: `rotate(${i % 2 === 0 ? 3 : -3}deg)`,
                       }}

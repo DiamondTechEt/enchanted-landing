@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Italic } from "../Italic";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 import cardMan from "@/assets/card-man.jpg";
 import cardDesert from "@/assets/card-desert.jpg";
@@ -15,6 +16,7 @@ import cardChecker from "@/assets/card-checker.jpg";
 
 export function EnterWorld() {
   const [isHovered, setIsHovered] = useState(false);
+  const isMobile = useIsMobile();
 
   // Exact tilt array specified in the design requirements
   const tilts = [6, -9, 12, -5, 8, -11, 4, -7, 10, -3];
@@ -32,7 +34,9 @@ export function EnterWorld() {
     cardChecker,
   ];
 
-  const radius = 340;
+  const radius = isMobile ? 155 : 340;
+  const cardSize = isMobile ? 65 : 160;
+  const containerHeight = isMobile ? "h-[450px]" : "h-[800px]";
 
   // Shared transition configuration for synchronized container rotation
   const rotationTransition = {
@@ -43,7 +47,7 @@ export function EnterWorld() {
 
   return (
     <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-[#F4F2EB] py-20 px-6">
-      <div className="relative w-full max-w-6xl h-[800px] flex items-center justify-center">
+      <div className={`relative w-full max-w-6xl ${containerHeight} flex items-center justify-center`}>
 
         {/* Orbit Ring Wrapper */}
         <motion.div
@@ -101,9 +105,13 @@ export function EnterWorld() {
                     repeatDelay: 10 // Waits 10 seconds between flips
                   }
                 }}
-                className="absolute left-1/2 top-1/2 w-[160px] h-[160px] -ml-[80px] -mt-[80px] rounded-[24px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.18)] bg-background border border-black/5"
+                className="absolute left-1/2 top-1/2 rounded-[14px] md:rounded-[24px] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.18)] bg-background border border-black/5"
                 style={{
-                  perspective: 1000 // Adds depth dimension to the flip
+                  perspective: 1000, // Adds depth dimension to the flip
+                  width: cardSize,
+                  height: cardSize,
+                  marginLeft: -cardSize / 2,
+                  marginTop: -cardSize / 2,
                 }}
               >
                 <img
@@ -125,7 +133,7 @@ export function EnterWorld() {
           transition={{ duration: 0.7, delay: 2.2 }} // Delayed slightly so it appears after the deck finishes dealing out
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="relative text-center text-[clamp(2.5rem,5vw,5rem)] font-black leading-[0.92] tracking-tight text-foreground select-none font-display z-10 pointer-events-auto cursor-default"
+          className="relative text-center text-[clamp(1.8rem,4.5vw,4rem)] font-black leading-[0.92] tracking-tight text-foreground select-none font-display z-10 pointer-events-auto cursor-default"
         >
           <span className="block">Enter the</span>
           <span className="block"><Italic>World.</Italic></span>

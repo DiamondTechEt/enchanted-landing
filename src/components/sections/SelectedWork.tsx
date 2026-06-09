@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Italic } from "../Italic";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 import cardHands from "@/assets/card-hands.jpg";
 import cardStones from "@/assets/card-stones.jpg";
@@ -16,6 +17,9 @@ interface CardProps {
 
 function HoverCard({ title, img, aspectClass, href }: CardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const isMobile = useIsMobile();
+
+  const showLabel = isHovered || isMobile;
 
   return (
     <motion.a
@@ -45,7 +49,7 @@ function HoverCard({ title, img, aspectClass, href }: CardProps) {
 
       {/* Floating text label at bottom left */}
       <AnimatePresence>
-        {isHovered && (
+        {showLabel && (
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -65,7 +69,7 @@ function HoverCard({ title, img, aspectClass, href }: CardProps) {
 
 export function SelectedWork() {
   return (
-    <section className="py-32 px-6">
+    <section className="py-16 md:py-32 px-6">
       {/* Section Title & Subtitle */}
       <div className="text-center mb-16 select-none">
         <h2 className="font-display text-[clamp(2.5rem,7vw,5.5rem)] font-black leading-[0.95] tracking-tight">
@@ -78,11 +82,11 @@ export function SelectedWork() {
 
       {/* Card Grid Layout */}
       <div className="max-w-6xl mx-auto flex flex-col gap-6">
-        {/* Row 1: Full-width plate card (ETR) */}
+        {/* Row 1: Full-width plate card (Eat The Rich) */}
         <HoverCard
-          title="ETR"
+          title="Eat The Rich"
           img={cardChecker}
-          aspectClass="w-full aspect-[16/8]"
+          aspectClass="w-full aspect-[4/5] md:aspect-[16/8]"
           href="https://ababa.io/work/etr"
         />
 
@@ -106,7 +110,7 @@ export function SelectedWork() {
         <HoverCard
           title="Mereba"
           img={cardStones}
-          aspectClass="w-full aspect-[16/8]"
+          aspectClass="w-full aspect-[4/5] md:aspect-[16/8]"
           href="https://ababa.io/work/mereba"
         />
       </div>

@@ -117,7 +117,7 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
           </div>
 
           {/* Rotating Contact Badge inside overlay */}
-          <div className="absolute bottom-6 right-6 w-28 h-28">
+          <div className="absolute bottom-4 right-4 w-20 h-20 md:bottom-6 md:right-6 md:w-28 md:h-28">
             <a
               href="#contact"
               onClick={onClose}
@@ -128,11 +128,11 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                   <defs>
                     <path id="overlay-circ" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
                   </defs>
-                  <text fontSize="11" fontWeight="600" fill="currentColor" className="text-foreground" letterSpacing="1">
+                  <text fontSize="11.5" fontWeight="600" fill="currentColor" className="text-foreground" letterSpacing="1">
                     <textPath href="#overlay-circ">Contact Us * Contact Us * Contact Us * </textPath>
                   </text>
                 </svg>
-                <ArrowUpRight className="w-7 h-7 text-foreground" strokeWidth={2.2} />
+                <ArrowUpRight className="w-5 h-5 md:w-7 md:h-7 text-foreground" strokeWidth={2.2} />
               </div>
             </a>
           </div>
@@ -155,7 +155,7 @@ export function SideNav() {
   ];
 
   return (
-    <nav className="fixed left-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-5">
+    <nav className="fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col gap-5">
       {navItems.map((item, i) => {
         const isHovered = hoveredIndex === i;
         return (
@@ -195,18 +195,18 @@ export function ContactSticker() {
   return (
     <a
       href="#contact"
-      className="fixed bottom-6 right-6 z-40 group block w-28 h-28"
+      className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-40 group block w-20 h-20 md:w-28 md:h-28"
     >
       <div className="relative w-full h-full rounded-full bg-lime flex items-center justify-center transition-transform group-hover:scale-110">
         <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full animate-spin-slow">
           <defs>
             <path id="circ" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
           </defs>
-          <text fontSize="11" fontWeight="600" fill="currentColor" className="text-foreground" letterSpacing="1">
+          <text fontSize="11.5" fontWeight="600" fill="currentColor" className="text-foreground" letterSpacing="1">
             <textPath href="#circ">Contact Us * Contact Us * Contact Us * </textPath>
           </text>
         </svg>
-        <ArrowUpRight className="w-7 h-7 text-foreground" strokeWidth={2.2} />
+        <ArrowUpRight className="w-5 h-5 md:w-7 md:h-7 text-foreground" strokeWidth={2.2} />
       </div>
     </a>
   );

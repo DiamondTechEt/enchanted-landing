@@ -138,6 +138,82 @@ export function Testimonials() {
     }
   };
 
+  if (isMobile) {
+    return (
+      <section className="py-20 px-0  h-full overflow-hidden bg-[#fbf9f4]">
+        <motion.h2
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="px-6 text-[clamp(2.2rem,8vw,3.5rem)] font-black leading-[1] tracking-tight text-foreground text-left"
+        >
+          Trusted by teams who move <Italic>fast.</Italic>
+        </motion.h2>
+
+        <div
+          className="mt-12 flex overflow-x-auto gap-6 px-6 py-8 scroll-smooth snap-x snap-mandatory scrollbar-none w-full"
+          style={{
+            msOverflowStyle: "none",
+            scrollbarWidth: "none",
+          }}
+        >
+          {cards.map((c, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+              className="snap-center shrink-0 w-[290px] h-[380px] rounded-[24px] p-6 shadow-[0_15px_40px_rgba(0,0,0,0.08)] flex flex-col justify-between"
+              style={{
+                backgroundColor: c.dark ? "#1a1c18" : "#ffffff",
+                color: c.dark ? "#ffffff" : "#1a1c18",
+                border: c.dark ? "none" : "1px solid rgba(0,0,0,0.08)",
+              }}
+            >
+              <div>
+                {/* Header: Stars & Contact Tag */}
+                <div className="flex items-center justify-between">
+                  <div className="flex gap-1">
+                    {Array.from({ length: c.stars }).map((_, s) => (
+                      <Star key={s} className="w-4 h-4 fill-[#c4f022] stroke-[#c4f022]" />
+                    ))}
+                  </div>
+                  {i === 4 && (
+                    <span className="text-[10px] font-bold tracking-wider opacity-60">
+                      CONTACT SALES
+                    </span>
+                  )}
+                </div>
+
+                {/* Body Copy */}
+                <p className="font-geist mt-6 text-sm leading-relaxed font-medium opacity-90">
+                  {c.body}
+                </p>
+              </div>
+
+              {/* Footer: Avatar & Info */}
+              <div className="mt-6 pt-4 border-t border-current/15 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full overflow-hidden bg-current/10 shrink-0">
+                  <img
+                    src={`https://i.pravatar.cc/150?u=${c.name}`}
+                    alt={c.name}
+                    className="w-full h-full object-cover grayscale"
+                  />
+                </div>
+                <div>
+                  <div className="font-bold text-xs tracking-tight">{c.name}</div>
+                  <div className="text-[10px] opacity-60 font-medium">{c.role}</div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-32 px-6 overflow-hidden bg-[#fbf9f4]">
       <motion.h2
