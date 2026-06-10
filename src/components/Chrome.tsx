@@ -5,16 +5,11 @@ import { Home, Tag, MessageSquare, PlaySquare, AtSign, ArrowUpRight } from "luci
 export function Logo() {
   return (
     <div className="fixed top-6 left-6 z-40">
-      <svg width="56" height="56" viewBox="0 0 64 64" className="text-foreground">
-        <g fill="currentColor">
-          <ellipse cx="32" cy="14" rx="11" ry="14" />
-          <ellipse cx="50" cy="32" rx="14" ry="11" />
-          <ellipse cx="32" cy="50" rx="11" ry="14" />
-          <ellipse cx="14" cy="32" rx="14" ry="11" />
-        </g>
-        <circle cx="32" cy="32" r="6" fill="var(--background)" />
-        <circle cx="32" cy="32" r="2.5" fill="currentColor" />
-      </svg>
+      <img
+        src="https://robproduction.co/assets/wolf-CkpQj1_n.png"
+        alt="Logo"
+        className="w-14 h-14 object-contain"
+      />
     </div>
   );
 }
@@ -75,16 +70,11 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
         >
           {/* Logo inside the overlay */}
           <div className="absolute top-6 left-6">
-            <svg width="56" height="56" viewBox="0 0 64 64" className="text-foreground">
-              <g fill="currentColor">
-                <ellipse cx="32" cy="14" rx="11" ry="14" />
-                <ellipse cx="50" cy="32" rx="14" ry="11" />
-                <ellipse cx="32" cy="50" rx="11" ry="14" />
-                <ellipse cx="14" cy="32" rx="14" ry="11" />
-              </g>
-              <circle cx="32" cy="32" r="6" fill="var(--background)" />
-              <circle cx="32" cy="32" r="2.5" fill="currentColor" />
-            </svg>
+            <img
+              src="https://robproduction.co/assets/wolf-CkpQj1_n.png"
+              alt="Logo"
+              className="w-14 h-14 object-contain"
+            />
           </div>
 
           {/* Links List */}
@@ -166,7 +156,7 @@ export function SideNav() {
               onMouseLeave={() => setHoveredIndex(null)}
               whileHover={{ rotate: -15, scale: 0.99, translateX: -5 }}
               transition={{ type: "spring", stiffness: 300, damping: 15 }}
-              className="w-[58px] h-[58px] rounded-[16px] bg-[#e6e2da]/40 hover:bg-[#e6e2da]/80 border border-foreground/5 transition-colors flex items-center justify-center cursor-pointer text-foreground/70 hover:text-foreground shadow-[0_2px_10px_rgba(0,0,0,0.02)]"
+              className="w-[58px] h-[58px] rounded-[16px] bg-[#e6e2da]  hover:bg-[#e6e2da] border border-foreground/5 transition-colors flex items-center justify-center cursor-pointer text-foreground/70 hover:text-foreground shadow-[0_2px_10px_rgba(0,0,0,0.02)]"
             >
               <item.Icon className="w-[22px] h-[22px]" strokeWidth={2.2} />
             </motion.a>

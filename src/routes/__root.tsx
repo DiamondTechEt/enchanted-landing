@@ -7,10 +7,9 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
   return (
@@ -37,9 +36,6 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
-  useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -93,12 +89,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Professional film production company creating powerful visual narratives and cinematic experiences. From concept to final cut - ROB FILM Production.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/SIDCxDT9AoNppsA9848SeuZjhjS2/social-images/social-1781067815171-logo.webp" },
+      { property: "og:image", content: "https://robproduction.co/assets/wolf-CkpQj1_n.png" },
       { name: "twitter:title", content: "ROB FILM Production - Turning Vision Into Motion" },
-      { name: "description", content: "Professional film production company creating powerful visual narratives and cinematic experiences. From concept to final cut - ROB FILM Production." },
-      { property: "og:description", content: "Professional film production company creating powerful visual narratives and cinematic experiences. From concept to final cut - ROB FILM Production." },
       { name: "twitter:description", content: "Professional film production company creating powerful visual narratives and cinematic experiences. From concept to final cut - ROB FILM Production." },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/SIDCxDT9AoNppsA9848SeuZjhjS2/social-images/social-1781067815171-logo.webp" },
+      { name: "twitter:image", content: "https://robproduction.co/assets/wolf-CkpQj1_n.png" },
     ],
     links: [
       {
@@ -120,35 +114,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       {
         rel: "icon",
-        type: "image/svg+xml",
-        href: "./wolf.svg",
-      },
-      {
-        rel: "icon",
-        href: "/wolf.png",
-        type: "image/x-icon",
+        type: "image/png",
+        href: "https://robproduction.co/assets/wolf-CkpQj1_n.png",
       },
       {
         rel: "apple-touch-icon",
-        sizes: "180x180",
-        href: "/wolf.png",
-      },
-      {
-        rel: "icon",
-        type: "image/png",
-        sizes: "32x32",
-        href: "/wolf.png",
-      },
-      {
-        rel: "icon",
-        type: "image/png",
-        sizes: "16x16",
-        href: "/wolf.png",
-      },
-      {
-        rel: "icon",
-        type: "image/png",
-        href: "/assets/wolf-CkpQj1_n.png",
+        href: "https://robproduction.co/assets/wolf-CkpQj1_n.png",
       },
       {
         rel: "stylesheet",
@@ -175,7 +146,7 @@ function RootShell({ children }: { children: ReactNode }) {
               "@type": "Organization",
               "name": "ROB FILM Production",
               "url": "https://robproduction.tv",
-              "logo": "https://robproduction.tv/wolf.png",
+              "logo": "https://robproduction.co/assets/wolf-CkpQj1_n.png",
               "sameAs": [
                 "https://www.facebook.com/robproduction",
                 "https://www.instagram.com/rob_film",
