@@ -93,7 +93,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Professional film production company creating powerful visual narratives and cinematic experiences. From concept to final cut - ROB FILM Production.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: "/src/assets/wolf-logo.png" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/SIDCxDT9AoNppsA9848SeuZjhjS2/social-images/social-1781067815171-logo.webp" },
+      { name: "twitter:title", content: "ROB FILM Production - Turning Vision Into Motion" },
+      { name: "description", content: "Professional film production company creating powerful visual narratives and cinematic experiences. From concept to final cut - ROB FILM Production." },
+      { property: "og:description", content: "Professional film production company creating powerful visual narratives and cinematic experiences. From concept to final cut - ROB FILM Production." },
+      { name: "twitter:description", content: "Professional film production company creating powerful visual narratives and cinematic experiences. From concept to final cut - ROB FILM Production." },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/SIDCxDT9AoNppsA9848SeuZjhjS2/social-images/social-1781067815171-logo.webp" },
     ],
     links: [
       {
