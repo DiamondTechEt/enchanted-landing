@@ -121,7 +121,7 @@ export function Hero() {
           initial="hidden"
           animate="show"
           variants={fadeUp}
-          className="font-display text-[clamp(2.6rem,8.5vw,7.5rem)] font-black leading-[0.95] tracking-[-0.04em]"
+          className="font-display text-[clamp(2.6rem,5.5vw,7.5rem)] font-black leading-[0.95] tracking-[-0.04em]"
         >
           Every artist<br />needs a <Italic>team.</Italic>
         </motion.h1>
@@ -137,7 +137,7 @@ export function Hero() {
       </div>
 
       {/* Cards Container - placed at the bottom */}
-      <div className="relative w-full h-[240px] md:h-[360px] flex items-end justify-center overflow-visible z-20 pb-10">
+      <div className="relative w-full h-[240px] md:h-[360px] flex items-end justify-center overflow-visible z-20 pb-16">
         {activeCards.map((c, i) => {
           const { x, rot, scale, y, zIndex } = getCardTransform(i);
           return (

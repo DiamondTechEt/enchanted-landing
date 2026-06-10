@@ -40,16 +40,36 @@
 }
 
 @layer base {
-  * { border-color: var(--color-border); }
-  html, body {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    background-color: var(--color-background);
+  }
+
+  body {
     background-color: var(--color-background);
     color: rgb(26, 28, 24);
     font-family: var(--font-geist);
     font-size: 16px;
     line-height: 24px;
     -webkit-font-smoothing: antialiased;
+    padding: 16px;
   }
-  h1, h2, h3, h4, h5, h6 {
+
+  @media (min-width: 768px) {
+    body {
+      padding: 48px;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
   }
 }
@@ -61,6 +81,7 @@
   src: url("https://fonts.gstatic.com/s/archivo/v19/k3kQo8UDI-1M0wlSV9XAw6lQkqWY8Q82sJaRE-NWIDdgffTTNDNZ9xdp.woff2") format("woff2");
   font-display: swap;
 }
+
 @font-face {
   font-family: "Instrument Serif";
   font-style: italic;
@@ -70,15 +91,20 @@
 }
 
 @keyframes spin-slow {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
-.animate-spin-slow { animation: spin-slow 12s linear infinite; }
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
 
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
 .scrollbar-none {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-

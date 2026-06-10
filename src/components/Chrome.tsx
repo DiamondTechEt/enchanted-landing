@@ -4,7 +4,7 @@ import { Home, Tag, MessageSquare, PlaySquare, AtSign, ArrowUpRight } from "luci
 
 export function Logo() {
   return (
-    <div className="fixed top-6 left-6 z-40">
+    <div className="fixed top-4 left-4 md:top-6 md:left-6 z-40">
       <img
         src="https://robproduction.co/assets/wolf-CkpQj1_n.png"
         alt="Logo"
@@ -22,7 +22,7 @@ export function MenuButton({ isOpen, onClick }: { isOpen: boolean; onClick: () =
         rotate: 5,
       }}
       transition={{ type: "spring", stiffness: 300, damping: 15 }}
-      className="fixed top-6 right-6 z-50 bg-foreground px-7 py-3 text-background text-sm font-medium cursor-pointer rounded-[16px]"
+      className="fixed top-4 right-4 md:top-6 md:right-6 z-50 bg-foreground px-7 py-3 text-background text-sm font-medium cursor-pointer rounded-[16px]"
     >
       {isOpen ? "Menu Close" : "Menu"}
     </motion.button>
@@ -69,7 +69,7 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
           className="fixed inset-0 w-screen h-screen bg-[#fbf9f4] z-40 flex flex-col justify-center px-8 md:px-[10vw]"
         >
           {/* Logo inside the overlay */}
-          <div className="absolute top-6 left-6">
+          <div className="absolute top-4 left-4 md:top-6 md:left-6">
             <img
               src="https://robproduction.co/assets/wolf-CkpQj1_n.png"
               alt="Logo"
@@ -145,7 +145,7 @@ export function SideNav() {
   ];
 
   return (
-    <nav className="fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col gap-5">
+    <nav className="fixed left-4 md:left-6 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col gap-5">
       {navItems.map((item, i) => {
         const isHovered = hoveredIndex === i;
         return (
